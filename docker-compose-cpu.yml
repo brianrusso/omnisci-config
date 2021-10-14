@@ -1,0 +1,101 @@
+version: '3.7'
+
+services:
+
+  omnisciserver:
+    container_name: omnisciserver
+    image: omnisci/omnisci-ee-cpu:v5.7.1
+    restart: always
+    ipc: shareable
+    volumes:
+      - /var/lib/omnisci:/omnisci-storage
+      - /var/lib/omnisci/dropbox:/jhub_omnisci_dropbox
+    networks:
+      - omnisci-frontend
+      - omnisci-backend
+    ports:
+      - "6273-6280:6273-6280"
+
+    # order of params matters! esp allow-s3
+    command:  /bin/bash -c "/omnisci/startomnisci  --non-interactive --data /omnisci-storage/data --config /omnisci-storage/omnisci.conf --allow-s3-server-privileges"
+
+    #environment:
+    #  AWS_REGION: us-east-2
+    #  AWS_ACCESS_KEY_ID: XXXXXXXXXXXX
+    #  AWS_SECRET_ACCESS_KEY: XXXXXXXXXXXX
+
+
+
+  jupyterhub:
+    container_name: jupyterhub
+    image: omnisci/omnisci-jupyterhub:v0.4
+    restart: always
+    networks:
+      - omnisci-backend
+    depends_on:
+      - omnisciserver
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Map this volume if binary encryption mode is configured and certificates are being validated
+      # - /var/lib/omnisci/cacerts.crt:/omnisci-storage/cacerts.crt
+
+    environment:
+      ### Required settings ###
+
+      # Note: if changing the image, do not remove the &jlabimage anchor
+      # The gpu image includes Rapids, requires GPU devices and nvidia docker runtime:
+      # DOCKER_JUPYTER_LAB_IMAGE: &jlabimage omnisci/omnisci-jupyterlab-gpu:v0.3
+      # Without rapids does not require GPU:
+      DOCKER_JUPYTER_LAB_IMAGE: &jlabimage omnisci/omnisci-jupyterlab-cpu:v0.4
+
+      OMNISCI_HOST: omnisciserver
+      OMNISCI_JUPYTER_ROLE: omnisci_jupyter
+
+      ### Optional settings  ###
+
+      # DOCKER_NOTEBOOK_DIR: /home/jovyan                   # The directory inside the user's Jupyter Lab container to mount the user volume to.
+      # HUB_IP: jupyterhub                                  # The hostname or IP of the Jupyter Hub server
+      # JHUB_BASE_URL: /jupyter/                            # The base URL prepended to all Jupyter Hub and Lab requests
+      JHUB_ENABLE_ADMIN_ACCESS: "true"                   # Enable / disable admin access to Jupyter Hub
+      # JLAB_CONTAINER_AUTOREMOVE: "true"                   # Enable / disable automatic removal of stopped Juptyer Lab containers
+      # JLAB_DOCKER_NETWORK_NAME: omnisci-backend           # The docker network name for Jupyter Lab containers
+      # JLAB_IDLE_TIMEOUT: 3600                             # Shut down Jupyter Lab containers after this many seconds of idle time
+      # JLAB_NAME_PREFIX: jupyterlab                        # Container name prefix for Lab containers
+      JLAB_OMNISCI_IMPORT_VOLUME_PATH: /var/lib/omnisci/dropbox  # Local Docker host path for where to mount the shared directory available to the OmniSciDB server for file ingest
+      JLAB_NOTEBOOK_TERMINALS_ENBLED: "true"             # Enable terminals in notebooks
+      JLAB_USER_VOLUME_PATH: /var/lib/omnisci/jupyter/    # Local Docker host path to be used for user Jupyter Lab home directory volume mapping
+      # JUPYTER_DEBUG: "true"                               # Turn on / off debugging for Jupyter Hub and Lab
+      # OMNISCI_BINARY_TLS_CACERTS_LOCAL_PATH: /var/lib/omnisci/cacerts.crt # Specifying this or mapping a volume in the Hub container to /omnisci-storage/cacerts.crt will automatically enable binary TLS mode
+      # OMNISCI_BINARY_TLS_VALIDATE: "false" # Whether or not to validate certificates in binary TLS mode. Specifying either "true" or "false" will enable binary TLS mode
+      # OMNISCI_PORT: 6278 # Port that Jupyter Hub should use to connect to OmniSci. Ensure this matches the protocol
+      # OMNISCI_PROTOCOL: http # Protocol that Jupyter Hub should use to connect to OmniSci. Ensure this is "binary" if using binary encryption
+      # SPAWNER_CPU_LIMIT: 1                                # Number of CPU cores available for each Jupyter Lab container, see https://jupyterhub.readthedocs.io/en/stable/api/spawner.html#jupyterhub.spawner.Spawner.cpu_limit
+      # SPAWNER_RAM_LIMIT: 10G                              # Amount of CPU RAM available for each Jupyter Lab container, see https://jupyterhub.readthedocs.io/en/stable/api/spawner.html#jupyterhub.spawner.LocalProcessSpawner.mem_limit
+      # SPAWNER_ENV_OMNISCI_HOST: omnisciserver             # Hostname / IP address of the OmniSci server for Lab containers to connect to by default
+      # SPAWNER_ENV_OMNISCI_PORT: 6274                      # Port of the OmniSci server for Lab containers to connect to by default
+      # SPAWNER_ENV_OMNISCI_PROTOCOL: binary                # Protocol of the OmniSci server for Lab containers to connect to by default
+      # OMNISCI_DB_URL: "omnisci://omnisciserver:6274/omnisci" # Alternative, direct connection (not Immerse session) to omnisciserver. Username will be inferred, but password will be required in notebook.
+
+      # More volumes for lab containers:
+      # JLAB_VOLUME_1: /data1:/data1:rw
+      # JLAB_VOLUME_2: /var/lib/omnisci:/omnisci-storage:ro
+
+
+  # The purpose of this is to make sure the jlabimage is pulled because jupyterhub will not pull it automatically when launching
+  jupyterlab-tmp:
+    image: *jlabimage
+    command: echo
+    networks:
+      - omnisci-backend
+
+
+networks:
+  omnisci-frontend:
+    driver: bridge
+    name: omnisci-frontend
+  omnisci-backend:
+    driver: bridge
+    name: omnisci-backend
+
