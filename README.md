@@ -80,8 +80,6 @@ sudo pkill -SIGHUP dockerd
 sudo docker run --runtime=nvidia --rm nvidia/cuda:11.0-runtime-ubuntu20.04 nvidia-smi
 ```
 
-
-
 ### Configure your /var/lib/omnisci as wherever you want the storage to run
 I run it on a separate XFS volume than my OS, size depends on how much data you're planning on but I suggest at least 100gb
 
@@ -114,6 +112,12 @@ sudo docker run --runtime=nvidia \
 ```
 
 
+### (OPTIONAL) - Generate S3 Creds and populate in docker-compose.yml
+- If you want to easily load data from S3 you can populate your credentials in the appropriate environment section of the docker-compose file (choose from below)
+- The keys to populate are AWS_REGION, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY which are passed as env vars to omnisci
+- You will also have to uncomment the updated command directive that passes --allow-s3-server-privileges to omnisci
+
+
 ### Run GPU + Jupyter Omnisci
 - Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
 - Copy servers.json -> /var/lib/omnisci/servers.json'
@@ -135,4 +139,18 @@ docker-compose up -d --remove-orphans
 ```
 docker-compose pull
 docker-compose up -d --remove-orphans
+```
+
+### Login to Omnisci
+- Go to http://localhost:6273 and login (admin/HyperInteractive)
+- Congratulations!
+
+### Create Jupyter Role + Grant role to users (If using Juypter)
+- Open Omnisci and go to SQL Editor
+- Omnisci documents user creation well - https://docs-new.omnisci.com/installation-and-configuration/security/roles#create-user-accounts
+- Run these commands as appropriate (replace username with whatever)
+```
+CREATE user developer (password = 'xxxxxx');
+CREATE ROLE omnisci_jupyter;
+GRANT omnisci_jupyter to developer;
 ```
