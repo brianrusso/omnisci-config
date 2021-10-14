@@ -1,16 +1,16 @@
-# omnisci-config
+# Working configurations for OMNISCI + Jupyter Free (CPU / GPU)
 
-Working configurations for OMNISCI + Jupyter Free (CPU / GPU)
+### OMNISCI's documentation is pretty good but there are a few errors.
 
-OMNISCI's documentation is pretty good but there are a few errors.
+If going CPU route, you probably want minimum of 8 cores and 32gigs memory.
+GPU depends on what you have of course, but double precision and memory is important (single GPU, up to 32gb). Something like a T4 (16gb) works well.
+These instructions assume Ubuntu 20.04 LTS
 
+## Install CUDA + Docker
 
-Base Image: Ubuntu 20 LTS
-
-# Update everything, install needed packages
+### Update everything, install needed packages
 apt update
 apt upgrade
-
 apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common gcc
 
 # Install CUDA (for GPU)
