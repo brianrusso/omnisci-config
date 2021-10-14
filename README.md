@@ -118,22 +118,11 @@ sudo docker run --runtime=nvidia \
 - You will also have to uncomment the updated command directive that passes --allow-s3-server-privileges to omnisci
 
 
-### Run GPU + Jupyter Omnisci
+### Run Omnisci + JupyterHub
 - Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
-- Copy servers.json -> /var/lib/omnisci/servers.json'
-- Copy docker-compose-gpu.yml -> /var/lib/omnisci/docker-compose.yml
-- Update the URLs in servers.json as-needed
-
-```
-docker-compose pull
-docker-compose up -d --remove-orphans
-```
-
-
-### Run CPU + Jupyter Omnisci
-- Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
-- Copy servers.json -> /var/lib/omnisci/servers.json'
-- Copy docker-compose-cpu.yml -> /var/lib/omnisci/docker-compose.yml
+- Copy servers.json -> /var/lib/omnisci/servers.json
+- Copy docker-compose-gpu.yml -> /var/lib/omnisci/docker-compose.yml (GPU)
+- Copy docker-compose-cpu.yml -> /var/lib/omnisci/docker-compose.yml (CPU)
 - Update the URLs in servers.json as-needed
 
 ```
