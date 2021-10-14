@@ -1,0 +1,83 @@
+[
+{
+   "database": "omnisci",
+   "url": "https://myserver.mydomain",
+   "port": "443",
+   "username": "admin",
+   "password": "HyperInteractive",
+   "enableJupyter": true,
+   "feature_flags": {
+      "ui/default_theme": "dark"
+   },
+   "customStyles": {
+      "logoURL": "https://myserver.mydomain/images/logo.png",
+      "loginText": "Feel the Power... of GPU",
+      "title": "Omnisci - Because Nobody Changes Defaults",
+      "buttonPrimaryColor": "#888888",
+      "buttonSecondaryColor": "#444444",
+      "buttonSecondaryHighlightColor": "#000000",
+      "colors": {
+        "solid": [
+           "#333333",
+           "#555555",
+           "#777777",
+           "#999999",
+           "#aaaaaa",
+           "#cccccc",
+           "#eeeeee",
+           "#ffffff"
+        ],
+        "custom": [
+           "#000000",
+           "#eeeeee",
+           "#222222",
+           "#cccccc",
+           "#444444",
+           "#bbbbbb",
+           "#666666",
+           "#aaaaaa",
+           "#333333",
+           "#dddddd",
+           "#111111"
+        ],
+        "ordinal": [
+           [
+              "#111111",
+              "#cccccc"
+           ],
+           [
+              "#111111",
+              "#777777",
+              "#cccccc"
+           ],
+           [
+              "#111111",
+              "#555555",
+              "#999999",
+              "#bbbbbb",
+              "#eeeeee"
+           ],
+           [
+              "#111111",
+              "#333333",
+              "#555555",
+              "#777777",
+              "#999999",
+              "#bbbbbb",
+              "#dddddd",
+              "#eeeeee"
+           ]
+        ],
+        "quantitative": [
+           [
+              "#555555",
+              "#cccccc"
+           ],
+           [  "#111111",
+              "#eeeeee"
+           ]
+        ]
+      }
+   }
+}
+]
