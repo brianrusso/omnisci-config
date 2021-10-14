@@ -3,6 +3,7 @@
 ### OMNISCI's documentation is pretty good but there are a few errors.
 
 If going CPU route, you probably want minimum of 8 cores and 32gigs memory.
+For root disk you want at least 50gb to keep docker happy (or you can separate that partition out)
 GPU depends on what you have of course, but double precision and memory is important (single GPU, up to 32gb). Something like a T4 (16gb) works well.
 
 These instructions assume Ubuntu 20.04 LTS. GPU steps can be ignored for CPU.
@@ -83,6 +84,9 @@ sudo docker run --runtime=nvidia --rm nvidia/cuda:11.0-runtime-ubuntu20.04 nvidi
 
 
 ### Configure your /var/lib/omnisci as wherever you want the storage to run
+I run it on a separate XFS volume than my OS, size depends on how much data you're planning on but I suggest at least 100gb
+
+
 ### I use cloudflare for these services, but you can do whatever suits your needs.
 https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
 
