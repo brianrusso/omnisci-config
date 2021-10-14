@@ -16,7 +16,7 @@ sudo apt upgrade
 sudo apt -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common gcc
 ```
 
-### Install CUDA ( GPU only)
+### Install CUDA (GPU only)
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
