@@ -95,7 +95,17 @@ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudfla
 ```
 
 
-### Run regular omnisci (GPU,  no jupyter)
+### Run CPU + no Jupyter
+```
+sudo docker run --runtime=nvidia \
+  -d --runtime=nvidia \
+  -v /var/lib/omnisci:/omnisci-storage \
+  -p 6273-6280:6273-6280 \
+  omnisci/omnisci-ee-cpu:v5.7.1
+```
+
+
+### Run GPU + no Jupyter
 ```
 sudo docker run --runtime=nvidia \
   -d --runtime=nvidia \
@@ -105,3 +115,25 @@ sudo docker run --runtime=nvidia \
 ```
 
 
+### Run GPU + Jupyter Omnisci
+Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
+Copy servers.json -> /var/lib/omnisci/servers.json'
+Copy docker-compose-gpu.yml -> /var/lib/omnisci/docker-compose.yml
+Update the URLs in servers.json as-needed
+
+```
+docker-compose pull
+docker-compose up -d --remove-orphans
+```
+
+
+### Run CPU + Jupyter Omnisci
+Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
+Copy servers.json -> /var/lib/omnisci/servers.json'
+Copy docker-compose-cpu.yml -> /var/lib/omnisci/docker-compose.yml
+Update the URLs in servers.json as-needed
+
+```
+docker-compose pull
+docker-compose up -d --remove-orphans
+```
