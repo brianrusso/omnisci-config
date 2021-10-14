@@ -48,7 +48,7 @@ services:
       # The gpu image includes Rapids, requires GPU devices and nvidia docker runtime:
       # DOCKER_JUPYTER_LAB_IMAGE: &jlabimage omnisci/omnisci-jupyterlab-gpu:v0.3
       # Without rapids does not require GPU:
-      DOCKER_JUPYTER_LAB_IMAGE: &jlabimage omnisci/omnisci-jupyterlab-cpu:v0.4
+      DOCKER_JUPYTER_LAB_IMAGE: &jlabimage omnisci/omnisci-jupyterlab-cpu:v0.5
 
       OMNISCI_HOST: omnisciserver
       OMNISCI_JUPYTER_ROLE: omnisci_jupyter
