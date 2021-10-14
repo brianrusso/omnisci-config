@@ -16,8 +16,8 @@ services:
     ports:
       - "6273-6280:6273-6280"
 
-    # order of params matters! esp allow-s3
-    command:  /bin/bash -c "/omnisci/startomnisci  --non-interactive --data /omnisci-storage/data --config /omnisci-storage/omnisci.conf --allow-s3-server-privileges"
+    # uncomment and populate env vars below if you want to load from S3 without passing creds every time
+    #command:  /bin/bash -c "/omnisci/startomnisci  --non-interactive --data /omnisci-storage/data --config /omnisci-storage/omnisci.conf --allow-s3-server-privileges"
 
     #environment:
     #  AWS_REGION: us-east-2
