@@ -132,6 +132,7 @@ docker-compose up -d --remove-orphans
 
 ### Login to Omnisci
 - Go to http://localhost:6273 and login (admin/HyperInteractive)
+- Omnisci can take 10-15 seconds to fully come up so if you get a blank screen, wait a bit
 - Congratulations!
 
 ### Create Jupyter Role + Grant role to users (If using Juypter)
