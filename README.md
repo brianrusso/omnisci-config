@@ -2,11 +2,10 @@
 
 ### OMNISCI's documentation is pretty good but there are a few errors.
 
-If going CPU route, you probably want minimum of 8 cores and 32gigs memory.
-For root disk you want at least 50gb to keep docker happy (or you can separate that partition out)
-GPU depends on what you have of course, but double precision and memory is important (single GPU, up to 32gb). Something like a T4 (16gb) works well.
-
-These instructions assume Ubuntu 20.04 LTS. GPU steps can be ignored for CPU.
+- If going CPU route, you probably want minimum of 8 cores and 32gigs memory.
+- For root disk you want at least 50gb to keep docker happy (or you can separate that partition out)
+- GPU depends on what you have of course, but double precision and memory is important (single GPU, up to 32gb). Something like a T4 (16gb) works well.
+- These instructions assume Ubuntu 20.04 LTS. GPU steps can be ignored for CPU.
 
 
 ### Install needed packages
@@ -116,10 +115,10 @@ sudo docker run --runtime=nvidia \
 
 
 ### Run GPU + Jupyter Omnisci
-Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
-Copy servers.json -> /var/lib/omnisci/servers.json'
-Copy docker-compose-gpu.yml -> /var/lib/omnisci/docker-compose.yml
-Update the URLs in servers.json as-needed
+- Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
+- Copy servers.json -> /var/lib/omnisci/servers.json'
+- Copy docker-compose-gpu.yml -> /var/lib/omnisci/docker-compose.yml
+- Update the URLs in servers.json as-needed
 
 ```
 docker-compose pull
@@ -128,10 +127,10 @@ docker-compose up -d --remove-orphans
 
 
 ### Run CPU + Jupyter Omnisci
-Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
-Copy servers.json -> /var/lib/omnisci/servers.json'
-Copy docker-compose-cpu.yml -> /var/lib/omnisci/docker-compose.yml
-Update the URLs in servers.json as-needed
+- Copy omnisci.conf -> /var/lib/omnisci/omnisci.conf
+- Copy servers.json -> /var/lib/omnisci/servers.json'
+- Copy docker-compose-cpu.yml -> /var/lib/omnisci/docker-compose.yml
+- Update the URLs in servers.json as-needed
 
 ```
 docker-compose pull
