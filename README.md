@@ -1,6 +1,6 @@
 # Working configurations for OMNISCI + Jupyter Free (CPU / GPU)
 
-### OMNISCI's documentation is pretty good but there are a few errors.
+### OMNISCI's documentation is pretty good but it can be tricky to get it working with jupyter and s3 access.
 
 - If going CPU route, you probably want minimum of 8 cores and 32gigs memory.
 - For root disk you want at least 50gb to keep docker happy (or you can separate that partition out)
